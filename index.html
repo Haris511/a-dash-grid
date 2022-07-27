@@ -20,13 +20,14 @@
             if (!dataExist) return
             const data = atob(params.get('data'))
             const parsedData = JSON.parse(data)
+            console.log(parsedData)
             const baseIcon = "https://haris511.github.io/a-dash-grid/numbers/"
 
             const formattedParsedData = []
 
             function getCenterLatLong() {
                 const countArray = Math.ceil(parsedData.length / 2)
-                const centerLatLong = { lat: parsedData[countArray][0], lng: parsedData[countArray][1] }
+                const centerLatLong = { lat: Number(parsedData[countArray][0]), lng: Number(parsedData[countArray][1]) }
                 return centerLatLong
             }
 
