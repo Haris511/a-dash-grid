@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="map" style="width:500px;height:500px;"></div>
+
+    <script>
+        function initMap() {
+            const params = new URLSearchParams(window.location.search)
+            const data = atob(params.get('data'))
+            const parsedData = JSON.parse(data)
+            const baseIcon = "http://127.0.0.1:5500/numbers/"
+
+            const formattedParsedData = []
+
+            function getCenterLatLong() {
+                const countArray = Math.ceil(parsedData.length / 2)
+                const centerLatLong = { lat: parsedData[countArray][0], lng: parsedData[countArray][1] }
+                return centerLatLong
+            }
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: getCenterLatLong(),
+                zoom: 16,
+            });
+
+            for (let i = 0; i < parsedData.length; i++) {
+                formattedParsedData.push({ position: new google.maps.LatLng(parsedData[i][0], parsedData[i][1]), icon: baseIcon + parsedData[i][2] + ".png" })
+            }
+
+
+            for (let i = 0; i < parsedData.length; i++) {
+                const marker = new google.maps.Marker({
+                    position: formattedParsedData[i].position,
+                    icon: formattedParsedData[i].icon,
+                    map: map,
+                });
+            }
+        }
+
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC90oX_-w5UGIGblj5HlS_sA349eVM-UAE&callback=initMap"></script>
+</body>
+
+</html>
