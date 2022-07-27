@@ -16,6 +16,8 @@
     <script>
         function initMap() {
             const params = new URLSearchParams(window.location.search)
+            const dataExist = params.has('data')
+            if (!dataExist) return
             const data = atob(params.get('data'))
             const parsedData = JSON.parse(data)
             const baseIcon = "http://127.0.0.1:5500/numbers/"
@@ -49,7 +51,8 @@
 
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC90oX_-w5UGIGblj5HlS_sA349eVM-UAE&callback=initMap"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC90oX_-w5UGIGblj5HlS_sA349eVM-UAE&callback=initMap"></script>
 </body>
 
 </html>
