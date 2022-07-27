@@ -37,7 +37,7 @@
             });
 
             for (let i = 0; i < parsedData.length; i++) {
-                formattedParsedData.push({ position: new google.maps.LatLng(parsedData[i][0], parsedData[i][1]), icon: baseIcon + parsedData[i][2] + ".png" })
+                formattedParsedData.push({ position: new google.maps.LatLng(Number(parsedData[i][0]), Number(parsedData[i][1])), icon: baseIcon + parsedData[i][2] + ".png" })
             }
 
 
