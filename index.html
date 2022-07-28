@@ -20,6 +20,7 @@
             if (!dataExist) return
             const data = atob(params.get('data'))
             const parsedData = JSON.parse(data)
+            console.log(parsedData)
             const baseIcon = "https://haris511.github.io/a-dash-grid/numbers/"
 
             const formattedParsedData = []
@@ -63,9 +64,9 @@
 
             map = new google.maps.Map(document.getElementById("map"), {
                 center: getCenterLatLong(),
-                zoom: 17,
+                zoom: 10,
                 fullscreenControl : false,
-                zoomControl: false,
+                // zoomControl: false,
             });
 
             for (let i = 0; i < parsedData.length; i++) {
