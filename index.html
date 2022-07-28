@@ -24,21 +24,54 @@
 
             const formattedParsedData = []
 
+            function calculateCenterLatLong(lat1, lat2, lon1, lon2) {
+
+                const lat1Radian = lat1 * Math.PI / 180;
+                const lat2Radian = lat2 * Math.PI / 180;
+                const lon1Radian = lon1 * Math.PI / 180
+                const lon2Radian = lon2 * Math.PI / 180
+
+                const Bx = Math.cos(lat2Radian) * Math.cos(lon2Radian - lon1Radian);
+                const By = Math.cos(lat2Radian) * Math.sin(lon2Radian - lon1Radian);
+
+                const lat3Radin = Math.atan2(Math.sin(lat1Radian) + Math.sin(lat2Radian),
+                    Math.sqrt((Math.cos(lat1Radian) + Bx) * (Math.cos(lat1Radian) + Bx) + By * By));
+
+                const lon3Radian = lon1Radian + Math.atan2(By, Math.cos(lat1Radian) + Bx);
+
+                const lat3Deg = lat3Radin * 180 / Math.PI
+                const lon3Deg = lon3Radian * 180 / Math.PI
+
+                const centerLatLon = { lat: lat3Deg, lng: lon3Deg }
+
+                return centerLatLon
+            }
+
             function getCenterLatLong() {
-                const countArray = Math.ceil(parsedData.length / 2)
-                const centerLatLong = { lat: Number(parsedData[countArray][0]), lng: Number(parsedData[countArray][1]) }
+                const countFirstArray = Math.ceil((parsedData.length / 2))
+                const countSecondArray = countFirstArray - 1
+
+                const lat1 = Number(parsedData[countFirstArray][0])
+                const lat2 = Number(parsedData[countSecondArray][0])
+                const lon1 = Number(parsedData[countFirstArray][1])
+                const lon2 = Number(parsedData[countSecondArray][1])
+
+                const centerLatLong = calculateCenterLatLong(lat1, lat2, lon1, lon2)
+
                 return centerLatLong
             }
 
             map = new google.maps.Map(document.getElementById("map"), {
                 center: getCenterLatLong(),
-                zoom: 16,
+                zoom: 17,
+                fullscreenControl : false,
+                zoomControl: false,
             });
 
             for (let i = 0; i < parsedData.length; i++) {
-                formattedParsedData.push({ position: new google.maps.LatLng(Number(parsedData[i][0]), Number(parsedData[i][1])), icon: baseIcon + parsedData[i][2] + ".png" })
+                let imageIcon = parsedData[i][2] !== 0 ? parsedData[i][2] : 100
+                formattedParsedData.push({ position: new google.maps.LatLng(Number(parsedData[i][0]), Number(parsedData[i][1])), icon: baseIcon + imageIcon + ".png" })
             }
-
 
             for (let i = 0; i < parsedData.length; i++) {
                 const marker = new google.maps.Marker({
