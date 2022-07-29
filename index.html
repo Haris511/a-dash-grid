@@ -24,41 +24,44 @@
 
             const formattedParsedData = []
 
-            function calculateCenterLatLong(lat1, lat2, lon1, lon2) {
+            // function calculateCenterLatLong(lat1, lat2, lon1, lon2) {
 
-                const lat1Radian = lat1 * Math.PI / 180;
-                const lat2Radian = lat2 * Math.PI / 180;
-                const lon1Radian = lon1 * Math.PI / 180
-                const lon2Radian = lon2 * Math.PI / 180
+            //     const lat1Radian = lat1 * Math.PI / 180;
+            //     const lat2Radian = lat2 * Math.PI / 180;
+            //     const lon1Radian = lon1 * Math.PI / 180
+            //     const lon2Radian = lon2 * Math.PI / 180
 
-                const Bx = Math.cos(lat2Radian) * Math.cos(lon2Radian - lon1Radian);
-                const By = Math.cos(lat2Radian) * Math.sin(lon2Radian - lon1Radian);
+            //     const Bx = Math.cos(lat2Radian) * Math.cos(lon2Radian - lon1Radian);
+            //     const By = Math.cos(lat2Radian) * Math.sin(lon2Radian - lon1Radian);
 
-                const lat3Radin = Math.atan2(Math.sin(lat1Radian) + Math.sin(lat2Radian),
-                    Math.sqrt((Math.cos(lat1Radian) + Bx) * (Math.cos(lat1Radian) + Bx) + By * By));
+            //     const lat3Radin = Math.atan2(Math.sin(lat1Radian) + Math.sin(lat2Radian),
+            //         Math.sqrt((Math.cos(lat1Radian) + Bx) * (Math.cos(lat1Radian) + Bx) + By * By));
 
-                const lon3Radian = lon1Radian + Math.atan2(By, Math.cos(lat1Radian) + Bx);
+            //     const lon3Radian = lon1Radian + Math.atan2(By, Math.cos(lat1Radian) + Bx);
 
-                const lat3Deg = lat3Radin * 180 / Math.PI
-                const lon3Deg = lon3Radian * 180 / Math.PI
+            //     const lat3Deg = lat3Radin * 180 / Math.PI
+            //     const lon3Deg = lon3Radian * 180 / Math.PI
 
-                const centerLatLon = { lat: lat3Deg, lng: lon3Deg }
+            //     const centerLatLon = { lat: lat3Deg, lng: lon3Deg }
 
-                console.log(centerLatLon)
+            //     console.log(centerLatLon)
 
-                return centerLatLon
-            }
+            //     return centerLatLon
+            // }
 
             function getCenterLatLong() {
-                const countFirstArray = Math.ceil((parsedData.length / 2))
-                const countSecondArray = countFirstArray - 1
+                const countFirstArray = Math.ceil((parsedData.length / 2) - 1)
+                const centerArray = parsedData[countFirstArray]
+                const centerLatLong = { lat: Number(centerArray[0]), lng: Number(centerArray[1]) }
 
-                const lat1 = Number(parsedData[countFirstArray][0])
-                const lat2 = Number(parsedData[countSecondArray][0])
-                const lon1 = Number(parsedData[countFirstArray][1])
-                const lon2 = Number(parsedData[countSecondArray][1])
+                // const countSecondArray = countFirstArray - 1
 
-                const centerLatLong = calculateCenterLatLong(lat1, lat2, lon1, lon2)
+                // const lat1 = Number(parsedData[countFirstArray][0])
+                // const lat2 = Number(parsedData[countSecondArray][0])
+                // const lon1 = Number(parsedData[countFirstArray][1])
+                // const lon2 = Number(parsedData[countSecondArray][1])
+
+                // const centerLatLong = calculateCenterLatLong(lat1, lat2, lon1, lon2)
 
                 return centerLatLong
             }
@@ -66,7 +69,7 @@
             map = new google.maps.Map(document.getElementById("map"), {
                 center: getCenterLatLong(),
                 zoom: 10,
-                fullscreenControl : false,
+                fullscreenControl: false,
                 zoomControl: false,
                 mapTypeControl: false,
                 streetViewControl: false,
